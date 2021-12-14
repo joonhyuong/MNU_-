@@ -134,7 +134,7 @@ public class AddBookFrame extends JFrame implements ActionListener{
 			}
 			else {
 				if(!Database.getInstance().checkTitle(title.getText())) {
-					Database.getInstance().insertAddData(isbn.getText() ,number.getText(), 
+					Database.getInstance().insertAddData(isbn.getText() ,number.getText(),
 							authors.getText(), title.getText(), publisher.getText(), 
 							book_date.getText(), status.getText(), 
 							regist_date.getText());

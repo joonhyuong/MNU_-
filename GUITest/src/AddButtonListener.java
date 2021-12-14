@@ -11,7 +11,15 @@ public class AddButtonListener implements ActionListener {
 	private void closeWindow_AddBook() {
 		window.dispose();
 	}
-	
+	public AddButtonListener(BorrowBookDialog borrowBookDialog) {
+		
+	}
+	public AddButtonListener(ReturnBookDialog returnBookDialog) {
+		
+	}
+	public AddButtonListener(ReservationBookDialog reservationBookDialog) {
+		
+	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

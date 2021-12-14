@@ -55,6 +55,7 @@ public class MainFrame extends JFrame {
 		membersMenuItem.addActionListener(menuListener);
 		addBook.addActionListener(menuListener);
 		bookList.addActionListener(menuListener);
+		loginMenuItem.addActionListener(menuListener);
 		logoutMenuItem.addActionListener(menuListener);
 		borrowbook.addActionListener(menuListener);
 		returnbook.addActionListener(menuListener);

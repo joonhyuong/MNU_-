@@ -4,11 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class Database {
 	private volatile static Database instance = null;
 	private Connection connection = null;
+
 	private Database() {
 		initDatabase();
 	}
@@ -91,6 +93,20 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
+	public void insertUpdateData(String isbn,String number,String authors
+			,String title, String publisher, String book_date,String status, String regist_date) {
+		try {
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate(
+					"UPDATE INTO addbook (isbn, number, authors, title, publisher, book_date, status, regist_date) "
+					+ "values('"+isbn+"', '"+number+"', '"+authors+"', '"+title+"', '"+publisher+"', '"+book_date+"', '"+status+"', '"+regist_date+"')");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private void initDatabase() {
 		// create a database connection
         try {
@@ -139,7 +155,7 @@ public class Database {
 		return retValue;
 	}
 	
-	public void printBookList(DefaultTableModel model) {
+	/*public void printBookList(DefaultTableModel model) {
 		try {
 			Statement statement = connection.createStatement();
 			ResultSet rs = statement.executeQuery("SELECT * FROM addbook");
@@ -168,12 +184,13 @@ public class Database {
 				System.out.println("STATUS : "+record[7]);
 				System.out.println("REGIST_DATE : "+record[8]);
 				System.out.println("");
+				model.addRow(record);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	public void insertJTable(DefaultTableModel model) {
 		try {
@@ -198,6 +215,69 @@ public class Database {
 		}
 	}
 	
+    public void insertBookJTable(DefaultTableModel model) {
+        try {
+			Statement statement = connection.createStatement();
+			ResultSet rs = statement.executeQuery("SELECT * FROM addbook");
+            model.setNumRows(0);
+            while (rs.next()) {
+                String[] record = new String[9];
+				record[0] = Integer.toString(rs.getInt("id"));
+				record[1] = rs.getString("isbn");
+				record[2] = rs.getString("number");
+				record[3] = rs.getString("authors");
+				record[4] = rs.getString("title");
+				record[5] = rs.getString("publisher");
+				record[6] = rs.getString("book_date");
+				record[7] = rs.getString("status");
+				record[8] = rs.getString("regist_date");
+
+                model.addRow(record);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 	
-	
+    
+    
+	public void BorrowBook(String title) {
+		try {
+			
+			connection.close();
+			connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate("UPDATE addbook SET status ='대출중' WHERE title='"+title+"'");
+		}  catch (SQLException e) {
+			e.printStackTrace();	
+		}
+	}
+
+	public void ReturnBook(String title) {
+		try {
+			
+			connection.close();
+			connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate("UPDATE addbook SET status ='예약, 대출가능' WHERE title='"+title+"'");
+		}  catch (SQLException e) {
+			e.printStackTrace();	
+		}
+	}
+
+	public void ReservationBook(String title) {
+		try {
+			
+			connection.close();
+			connection = DriverManager.getConnection("jdbc:sqlite:sample.db");
+			Statement statement = connection.createStatement();
+			statement.setQueryTimeout(30);
+			statement.executeUpdate("UPDATE addbook SET status ='예약완료' WHERE title='"+title+"'");
+		}  catch (SQLException e) {
+			e.printStackTrace();	
+		}
+	}
 }
