@@ -9,10 +9,8 @@ import javax.swing.JTextField;
 
 public class BorrowBookDialog extends JFrame implements ActionListener{
 	
-	private JTextField id = new JTextField();
 	private JTextField title = new JTextField();
 
-	private JLabel J_id = new JLabel("ID");
 	private JLabel J_title = new JLabel("TITLE");
 
 	private JButton Borrow_Btn = new JButton("Borrow");
@@ -27,21 +25,15 @@ public class BorrowBookDialog extends JFrame implements ActionListener{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
-		id.setBounds(10,40,100,20);
-		title.setBounds(10,80,100,20);
+		title.setBounds(10,50,100,20);
 	
 		
-		J_id.setBounds(130, 40, 150, 20);
-		J_title.setBounds(130, 80, 150, 20);
+		J_title.setBounds(130, 50, 150, 20);
 
 		
 		Borrow_Btn.setBounds(30, 120, 100, 40);
 		Exit_Btn.setBounds(140, 120, 70, 40);
-		add(id);
 		add(title);
-
-		
-		add(J_id);
 	
 		add(J_title);
 
